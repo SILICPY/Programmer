@@ -8,7 +8,7 @@ BIN_NAME=prog
 BIN_PATH=$BIN_DIR$BIN_NAME
 
 check_installed() {
-  (&>/dev/null python -c "import $1") || (echo "Error: python module $1 is not installed."; exit 1)
+  (&>/dev/null python -c "import $1") || { echo "Error: python module $1 is not installed."; exit 1; }
 }
 
 confirm() {
@@ -35,3 +35,7 @@ fi
 
 chmod +x ./cli/cli.py
 sudo ln -s $(realpath ./cli/cli.py) $BIN_PATH 
+
+confirm "Do you want to flash the programmer now" && ./flash.sh
+
+echo "Installation completed successfully."
