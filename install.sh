@@ -26,6 +26,8 @@ confirm() {
 check_installed click
 check_installed serial
 
+echo "Installing to $BIN_PATH ..."
+
 if [ -f $BIN_PATH ]; then
   confirm "Warning: symlink $BIN_PATH exists already. Continue anyways" || exit 1
   sudo rm $BIN_PATH
