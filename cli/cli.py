@@ -21,14 +21,14 @@ def cli(ic: BaseIC, port: str, range: CtxStr) -> None:
 
         try:
             if split[0]: Context.range[0] = as_int(split[0])
-            if split[1]: Context.range[1] = as_int(split[1])
+            if split[1]: Context.range[1] = as_int(split[1]) + 1
         except ValueError:
-            range.fail(f"{range.value} contains non-integer values.")
+            range.fail(f"Range {range.value} contains non-integer values.")
 
         if not Context.range[0] < Context.range[1]:
-            range.fail(f"Range has to be bigger than zero.")
+            range.fail(f"Range cannot be negative.")
         if not Context.range[0] < Context.ic.size:
-            range.fail(f"Rtart of range has to be in address space of ROM IC.")
+            range.fail(f"Start of range has to be in address space of ROM IC.")
         if Context.ic.size < Context.range[1]:
             Context.range[1] = Context.ic.size
             warning("Truncated range to match size of ROM IC.")

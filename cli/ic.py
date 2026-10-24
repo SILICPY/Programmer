@@ -11,12 +11,12 @@ class SST39SF010(BaseIC):
         SerDev.cmd(ERASE_SECTOR)
 
         first_sector = addr_range[0] // 4096
-        last_sector = -(addr_range[1] // -4096)
-        click.echo(f"Erasing sectors \
+        last_sector = (addr_range[1] - 1) // 4096
+        click.echo(f"Erasing sector \
 {first_sector} ({"0x{:05x}".format(first_sector * 4096)}) to \
 {last_sector} ({"0x{:05x}".format(last_sector * 4096)}).")
         
-        for sector in progress(range(first_sector, last_sector)):
+        for sector in progress(range(first_sector, last_sector + 1)):
             SerDev.data(sector)
             SerDev.read()
 
